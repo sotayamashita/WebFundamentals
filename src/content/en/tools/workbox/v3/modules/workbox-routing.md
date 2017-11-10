@@ -19,13 +19,6 @@ When a network request causes a service worker fetch event, `workbox-routing` wi
 
 ![Workbox Routing Diagram](../images/workbox-routing-diagram.png)
 
-1. The Router will get all of the Routes that match the requests method type (i.e. `GET`, `POST`, `DELETE`, etc).
-1. It’ll call each Route’s "match" function until one of these functions returns a truthy value, in other words the Route has matched the request and can handle it.
-    1. If matching Route is found, the Router will call the Route’s "handler" function which will provide a Response that will be given to the browser.
-    1. If the Router has a "default" Route set, the request will be matched against it.
-        1. If a Route is used and throws an error, the Router will use a "catch" Route if it’s defined.
-    1. If there is no matching Route, `workbox-routing` will not do anything to the request allowing other ‘fetch’ events to be used.
-
 The main things to note from the above is:
 
 - The type of request is important.
