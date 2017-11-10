@@ -37,7 +37,7 @@
 
 import {Queue} from &#x27;workbox-background-sync/Queue.mjs&#x27;;
 import {QueuePlugin} from &#x27;workbox-background-sync/QueuePlugin.mjs&#x27;;
-import {cacheNames} from &#x27;workbox-core/_private.mjs&#x27;;
+import {cacheNames} from &#x27;workbox-core/_private/cacheNames.mjs&#x27;;
 import {Route} from &#x27;workbox-routing/Route.mjs&#x27;;
 import {Router} from &#x27;workbox-routing/Router.mjs&#x27;;
 import {NetworkFirst} from &#x27;workbox-runtime-caching/NetworkFirst.mjs&#x27;;
@@ -46,7 +46,9 @@ import {
   QUEUE_NAME,
   MAX_RETENTION_TIME,
   GOOGLE_ANALYTICS_HOST,
+  GTM_HOST,
   ANALYTICS_JS_PATH,
+  GTAG_JS_PATH,
   COLLECT_PATH,
 } from &#x27;./utils/constants.mjs&#x27;;
 import &#x27;./_version.mjs&#x27;;
@@ -150,6 +152,21 @@ const createAnalyticsJsRoute &#x3D; (cacheName) &#x3D;&gt; {
 };
 
 /**
+ * Creates a route with a network first strategy for the gtag.js script.
+ *
+ * @private
+ * @param {string} cacheName
+ * @return {Route} The created route.
+ */
+const createGtagJsRoute &#x3D; (cacheName) &#x3D;&gt; {
+  const match &#x3D; ({url}) &#x3D;&gt; url.hostname &#x3D;&#x3D;&#x3D; GTM_HOST &amp;amp;&amp;amp;
+      url.pathname &#x3D;&#x3D;&#x3D; GTAG_JS_PATH;
+  const handler &#x3D; new NetworkFirst({cacheName});
+
+  return new Route(match, handler, &#x27;GET&#x27;);
+};
+
+/**
  * @param {Object&#x3D;} [options]
  * @param {Object} [options.cacheName] The cache name to store and retrieve
  *     analytics.js. Defaults to the cache names provided by &#x60;workbox-core&#x60;.
@@ -176,6 +193,7 @@ const initialize &#x3D; (options &#x3D; {}) &#x3D;&gt; {
 
   const routes &#x3D; [
     createAnalyticsJsRoute(cacheName),
+    createGtagJsRoute(cacheName),
     ...createCollectRoutes(queue),
   ];
 

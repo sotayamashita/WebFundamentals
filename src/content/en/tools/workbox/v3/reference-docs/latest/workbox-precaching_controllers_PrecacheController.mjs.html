@@ -36,14 +36,12 @@
   limitations under the License.
 */
 
-import {
-  cacheNames,
-  WorkboxError,
-  fetchWrapper,
-  cacheWrapper,
-  assert,
-  logger,
-} from &#x27;workbox-core/_private.mjs&#x27;;
+import {cacheNames} from &#x27;workbox-core/_private/cacheNames.mjs&#x27;;
+import {WorkboxError} from &#x27;workbox-core/_private/WorkboxError.mjs&#x27;;
+import {fetchWrapper} from &#x27;workbox-core/_private/fetchWrapper.mjs&#x27;;
+import {cacheWrapper} from &#x27;workbox-core/_private/cacheWrapper.mjs&#x27;;
+import {assert} from &#x27;workbox-core/_private/assert.mjs&#x27;;
+import {logger} from &#x27;workbox-core/_private/logger.mjs&#x27;;
 import PrecacheEntry from &#x27;../models/PrecacheEntry.mjs&#x27;;
 import PrecachedDetailsModel from &#x27;../models/PrecachedDetailsModel.mjs&#x27;;
 import showWarningsIfNeeded from &#x27;../utils/showWarningsIfNeeded.mjs&#x27;;

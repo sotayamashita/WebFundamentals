@@ -36,8 +36,9 @@
   limitations under the License.
 */
 
-import {WorkboxError, assert, logger} from &#x27;workbox-core/_private.mjs&#x27;;
-
+import {WorkboxError} from &#x27;workbox-core/_private/WorkboxError.mjs&#x27;;
+import {assert} from &#x27;workbox-core/_private/assert.mjs&#x27;;
+import {logger} from &#x27;workbox-core/_private/logger.mjs&#x27;;
 import CacheTimestampsModel from &#x27;./models/CacheTimestampsModel.mjs&#x27;;
 import &#x27;./_version.mjs&#x27;;
 
@@ -45,6 +46,8 @@ import &#x27;./_version.mjs&#x27;;
  * The &#x60;CacheExpiration&#x60; class allows you define an expiration and / or
  * limit on the number of responses stored in a
  * [&#x60;Cache&#x60;](https://developer.mozilla.org/en-US/docs/Web/API/Cache).
+ *
+ * @memberof workbox.expiration
  */
 class CacheExpiration {
   /**
@@ -58,7 +61,7 @@ class CacheExpiration {
    * @param {number} [config.maxAgeSeconds] The maximum age of an entry before
    * it&#x27;s treated as stale and removed.
    */
-  constructor(cacheName, config) {
+  constructor(cacheName, config &#x3D; {}) {
     if (process.env.NODE_ENV !&#x3D;&#x3D; &#x27;production&#x27;) {
       assert.isType(cacheName, &#x27;string&#x27;, {
         moduleName: &#x27;workbox-cache-expiration&#x27;,
@@ -68,7 +71,11 @@ class CacheExpiration {
       });
 
       if (!(config.maxEntries || config.maxAgeSeconds)) {
-        throw new WorkboxError(&#x27;max-entries-or-age-required&#x27;);
+        throw new WorkboxError(&#x27;max-entries-or-age-required&#x27;, {
+          moduleName: &#x27;workbox-cache-expiration&#x27;,
+          className: &#x27;CacheExpiration&#x27;,
+          funcName: &#x27;constructor&#x27;,
+        });
       }
 
       if (config.maxEntries) {
@@ -78,6 +85,8 @@ class CacheExpiration {
           funcName: &#x27;constructor&#x27;,
           paramName: &#x27;config.maxEntries&#x27;,
         });
+
+        // TODO: Assert is positive
       }
 
       if (config.maxAgeSeconds) {
@@ -87,6 +96,8 @@ class CacheExpiration {
           funcName: &#x27;constructor&#x27;,
           paramName: &#x27;config.maxAgeSeconds&#x27;,
         });
+
+        // TODO: Assert is positive
       }
     }
 
@@ -100,9 +111,6 @@ class CacheExpiration {
 
   /**
    * Expires entries for the given cache and given criteria.
-   *
-   * @return {Promise&amp;lt;Array&amp;lt;string&gt;&gt;} Returns an array of URLs that were
-   * removed.
    */
   async expireEntries() {
     if (this._isRunning) {
@@ -129,20 +137,27 @@ class CacheExpiration {
     ]);
 
     if (process.env.NODE_ENV !&#x3D;&#x3D; &#x27;production&#x27;) {
-      // TODO break apart entries deleted due to expiration vs size restraints
-      logger.groupCollapsed(
-        &#x60;Expired ${allUrls.length} entries have been removed from the cache.&#x60;);
-      logger.debug(&#x60;Cache name:&#x60;, this._cacheName);
-      logger.debug(&#x60;URLS:&#x60;, allUrls);
-      logger.groupEnd();
+      // TODO: break apart entries deleted due to expiration vs size restraints
+      if (allUrls.length &gt; 0) {
+        logger.groupCollapsed(
+          &#x60;Expired ${allUrls.length} &#x60; +
+          &#x60;${allUrls.length &#x3D;&#x3D;&#x3D; 1 ? &#x27;entry&#x27; : &#x27;entries&#x27;} and removed &#x60; +
+          &#x60;${allUrls.length &#x3D;&#x3D;&#x3D; 1 ? &#x27;it&#x27; : &#x27;them&#x27;} from the &#x60; +
+          &#x60;&#x27;${this._cacheName}&#x27; cache.&#x60;);
+        logger.log(
+          &#x60;Expired the following ${allUrls.length &#x3D;&#x3D;&#x3D; 1 ? &#x27;URL&#x27; : &#x27;URLs&#x27;}:&#x60;);
+        allUrls.forEach((url) &#x3D;&gt; logger.log(&#x60;    ${url}&#x60;));
+        logger.groupEnd();
+      } else {
+        logger.debug(&#x60;Cache expiration ran and found no entries to remove.&#x60;);
+      }
     }
 
     this._isRunning &#x3D; false;
     if (this._rerunRequested) {
+      this._rerunRequested &#x3D; false;
       this.expireEntries();
     }
-
-    return allUrls;
   }
 
   /**
@@ -193,10 +208,6 @@ class CacheExpiration {
 
     const timestamps &#x3D; await this._timestampModel.getAllTimestamps();
     while (timestamps.length &gt; this._maxEntries) {
-      if (timestamps.length &#x3D;&#x3D;&#x3D; 0) {
-        break;
-      }
-
       const lastUsed &#x3D; timestamps.shift();
       extraUrls.push(lastUsed.url);
     }

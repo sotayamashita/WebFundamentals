@@ -82,8 +82,7 @@ module.exports &#x3D; async (destDirectory) &#x3D;&gt; {
     (dependency) &#x3D;&gt; dependency.startsWith(WORKBOX_PREFIX));
   for (const library of librariesToCopy) {
     const pkg &#x3D; require(&#x60;${library}/package.json&#x60;);
-    // TODO: This will change to pkg.main at some point.
-    const defaultPathToLibrary &#x3D; require.resolve(&#x60;${library}/${pkg.browser}&#x60;);
+    const defaultPathToLibrary &#x3D; require.resolve(&#x60;${library}/${pkg.main}&#x60;);
 
     for (const buildType of BUILD_TYPES) {
       const srcPath &#x3D; useBuildType(defaultPathToLibrary, buildType);

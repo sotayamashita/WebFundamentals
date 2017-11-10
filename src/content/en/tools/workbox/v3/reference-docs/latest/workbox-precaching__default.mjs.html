@@ -36,7 +36,10 @@
   limitations under the License.
 */
 
-import {assert, cacheNames} from &#x27;workbox-core/_private.mjs&#x27;;
+import {assert} from &#x27;workbox-core/_private/assert.mjs&#x27;;
+import {cacheNames} from &#x27;workbox-core/_private/cacheNames.mjs&#x27;;
+import {logger} from &#x27;workbox-core/_private/logger.mjs&#x27;;
+import {getFriendlyURL} from &#x27;workbox-core/_private/getFriendlyURL.mjs&#x27;;
 import PrecacheController from &#x27;./controllers/PrecacheController.mjs&#x27;;
 import &#x27;./_version.mjs&#x27;;
 
@@ -106,6 +109,10 @@ const _getPrecachedUrl &#x3D; (url, {
   const cachedUrls &#x3D; precacheController.getCachedUrls();
   if (cachedUrls.indexOf(urlObject.href) !&#x3D;&#x3D; -1) {
     // It&#x27;s a perfect match
+    if (process.env.NODE_ENV !&#x3D;&#x3D; &#x27;production&#x27;) {
+      logger.debug(&#x60;Precaching found an exact URL match for &#x60; +
+        getFriendlyURL(urlObject.toString()));
+    }
     return urlObject.href;
   }
 
@@ -113,12 +120,20 @@ const _getPrecachedUrl &#x3D; (url, {
     urlObject, ignoreUrlParametersMatching
   );
   if (cachedUrls.indexOf(strippedUrl.href) !&#x3D;&#x3D; -1) {
+    if (process.env.NODE_ENV !&#x3D;&#x3D; &#x27;production&#x27;) {
+      logger.debug(&#x60;Precaching found an exact URL match for stripped URL&#x60; +
+        getFriendlyURL(strippedUrl.toString()));
+    }
     return strippedUrl.href;
   }
 
   if (directoryIndex &amp;amp;&amp;amp; strippedUrl.pathname.endsWith(&#x27;/&#x27;)) {
     strippedUrl.pathname +&#x3D; directoryIndex;
     if (cachedUrls.indexOf(strippedUrl.href) !&#x3D;&#x3D; -1) {
+      if (process.env.NODE_ENV !&#x3D;&#x3D; &#x27;production&#x27;) {
+        logger.debug(&#x60;Precaching found an exact URL match with &#x60; +
+          &#x60;&#x27;directoryIndex&#x27; ${getFriendlyURL(strippedUrl.toString())}&#x60;);
+      }
       return strippedUrl.href;
     }
   }
@@ -184,7 +199,7 @@ moduleExports.precache &#x3D; (entries) &#x3D;&gt; {
  */
 moduleExports.addRoute &#x3D; (options) &#x3D;&gt; {
   if (fetchListenersAdded) {
-    // TODO Throw error here.
+    // TODO: Throw error here.
     return;
   }
 
@@ -192,13 +207,39 @@ moduleExports.addRoute &#x3D; (options) &#x3D;&gt; {
   self.addEventListener(&#x27;fetch&#x27;, (event) &#x3D;&gt; {
     const precachedUrl &#x3D; _getPrecachedUrl(event.request.url, options);
     if (!precachedUrl) {
+      if (process.env.NODE_ENV !&#x3D;&#x3D; &#x27;production&#x27;) {
+        logger.debug(&#x60;Precaching found no match for &#x60; +
+          getFriendlyURL(event.request.url));
+      }
       return;
     }
 
-    const responsePromise &#x3D; caches.open(cacheName)
+    let responsePromise &#x3D; caches.open(cacheName)
     .then((cache) &#x3D;&gt; {
       return cache.match(precachedUrl);
     });
+    if (process.env.NODE_ENV !&#x3D;&#x3D; &#x27;production&#x27;) {
+      responsePromise &#x3D; responsePromise.then((response) &#x3D;&gt; {
+        // Workbox is going to handle the route.
+        // print the routing details to the console.
+        logger.groupCollapsed(&#x60;Precaching is responding to: &#x60; +
+          getFriendlyURL(event.request.url));
+        logger.log(&#x60;Serving the precached url: ${precachedUrl}&#x60;);
+
+        // The Request and Response objects contains a great deal of
+        // information, hide it under a group in case developers want to see it.
+        logger.groupCollapsed(&#x60;View request details here.&#x60;);
+        logger.unprefixed.log(event.request);
+        logger.groupEnd();
+
+        logger.groupCollapsed(&#x60;View response details here.&#x60;);
+        logger.unprefixed.log(response);
+        logger.groupEnd();
+
+        logger.groupEnd();
+        return response;
+      });
+    }
     event.respondWith(responsePromise);
   });
 };

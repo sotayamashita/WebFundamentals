@@ -70,8 +70,7 @@ async function generateSW(input) {
   const destDirectory &#x3D; path.dirname(options.swDest);
 
   if (options.importWorkboxFromCDN) {
-    // TODO: Update for https://github.com/GoogleChrome/workbox/issues/969.
-    const cdnUrl &#x3D; cdnUtils.getModuleUrl(&#x27;workbox-sw&#x27;, &#x27;prod&#x27;);
+    const cdnUrl &#x3D; cdnUtils.getModuleUrl(&#x27;workbox-sw&#x27;);
     // importScripts may or may not already be an array containing other URLs.
     // Either way, list cdnUrl first.
     options.importScripts &#x3D; [cdnUrl].concat(options.importScripts || []);
@@ -87,14 +86,15 @@ async function generateSW(input) {
     ].concat(options.globIgnores || []);
 
     const workboxSWPkg &#x3D; require(&#x60;workbox-sw/package.json&#x60;);
-    // TODO: This will change to workboxSWPkg.main at some point.
-    const workboxSWFilename &#x3D; path.basename(workboxSWPkg.browser);
+    const workboxSWFilename &#x3D; path.basename(workboxSWPkg.main);
 
     // importScripts may or may not already be an array containing other URLs.
     // Either way, list workboxSWFilename first.
     options.importScripts &#x3D; [
       &#x60;${workboxDirectoryName}/${workboxSWFilename}&#x60;,
     ].concat(options.importScripts || []);
+
+    options.modulePathPrefix &#x3D; workboxDirectoryName;
   }
 
   const {count, size, manifestEntries} &#x3D; await getFileManifestEntries(options);

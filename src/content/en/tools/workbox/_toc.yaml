@@ -35,11 +35,15 @@ toc:
       path: /web/tools/workbox/v3/modules/workbox-core
     - title: workbox-precaching
       path: /web/tools/workbox/v3/modules/workbox-precaching
+    - title: workbox-routing
+      path: /web/tools/workbox/v3/modules/workbox-routing
   - title: Reference Docs
     section:
     - title: "workbox-core"
       path: /web/tools/workbox/v3/reference-docs/latest/workbox.core
     - title: "workbox-precaching"
       path: /web/tools/workbox/v3/reference-docs/latest/workbox.precaching
+    - title: "workbox-routing"
+      path: /web/tools/workbox/v3/reference-docs/latest/workbox.routing
     - title: "View Full API"
       path: /web/tools/workbox/v3/reference-docs/latest/index-all
