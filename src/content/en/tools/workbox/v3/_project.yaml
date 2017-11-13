@@ -1,4 +1,3 @@
-parent_project_metadata_path: /web/tools/_project.yaml
 name: Workbox
 description: Workbox is a set of service worker libraries that making build progressive web apps easy.
 home_url: /web/tools/workbox/

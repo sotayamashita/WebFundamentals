@@ -13,7 +13,7 @@ footer:
   - name: Get in Touch
     icon_name: star
     contents:
-    - label: "@workboxjs"
+    - label: "@workboxjs on Twitter"
       path: https://twitter.com/workboxjs
     - label: Join the Slack Channel
       path: /web/tools/workbox/v3/community
