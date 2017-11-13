@@ -2,8 +2,8 @@
 <html devsite>
 
 <head>
-  <meta name="project_path" value="/web/tools/_project.yaml" />
-  <meta name="book_path" value="/web/tools/_book.yaml" />
+  <meta name="project_path" value="/web/tools/workbox/v3/_project.yaml" />
+  <meta name="book_path" value="/web/tools/workbox/v3/_book.yaml" />
   <meta name="gtm_var" data-key="docType" data-value="reference">
   <title>Source: workbox-webpack-plugin/src/lib/utils/read-file.js</title>
   <link href="jsdoc.css" rel="stylesheet">
@@ -47,8 +47,9 @@ let readFileFn;
 /**
  * Sets the read file function.
  *
- * @private
  * @param {Function} fn The function to use.
+ *
+ * @private
  */
 function setReadFile(fn) {
   readFileFn &#x3D; fn;
@@ -57,9 +58,10 @@ function setReadFile(fn) {
 /**
  * A wrapper that calls readFileFn and returns a promise for the contents.
  *
- * @private
  * @param {string} filePath The file to read.
  * @return {Promise&amp;lt;string&gt;} The contents of the file.
+ *
+ * @private
  */
 function readFile(filePath) {
   return new Promise((resolve, reject) &#x3D;&gt; {

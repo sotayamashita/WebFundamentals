@@ -2,8 +2,8 @@
 <html devsite>
 
 <head>
-  <meta name="project_path" value="/web/tools/_project.yaml" />
-  <meta name="book_path" value="/web/tools/_book.yaml" />
+  <meta name="project_path" value="/web/tools/workbox/v3/_project.yaml" />
+  <meta name="book_path" value="/web/tools/workbox/v3/_book.yaml" />
   <meta name="gtm_var" data-key="docType" data-value="reference">
   <title>Source: workbox-google-analytics/_default.mjs</title>
   <link href="jsdoc.css" rel="stylesheet">
@@ -56,9 +56,10 @@ import &#x27;./_version.mjs&#x27;;
 /**
  * Promisifies the FileReader API to await a text response from a Blob.
  *
- * @private
  * @param {Blob} blob
  * @return {Promise&amp;lt;string&gt;}
+ *
+ * @private
  */
 const getTextFromBlob &#x3D; (blob) &#x3D;&gt; {
   return new Promise((resolve, reject) &#x3D;&gt; {
@@ -75,9 +76,10 @@ const getTextFromBlob &#x3D; (blob) &#x3D;&gt; {
  * &#x60;qt&#x60; param based on the current time, as well as applies any other
  * user-defined hit modifications.
  *
- * @private
  * @param {Object} config See workbox.googleAnalytics.initialize.
  * @return {Function} The requestWillDequeu callback function.
+ *
+ * @private
  */
 const createRequestWillReplayCallback &#x3D; (config) &#x3D;&gt; {
   return async ({url, timestamp, requestInit}) &#x3D;&gt; {
@@ -118,9 +120,10 @@ const createRequestWillReplayCallback &#x3D; (config) &#x3D;&gt; {
 /**
  * Creates GET and POST routes to catch failed Measurement Protocol hits.
  *
- * @private
  * @param {Queue} queue
  * @return {Array&amp;lt;Route&gt;} The created routes.
+ *
+ * @private
  */
 const createCollectRoutes &#x3D; (queue) &#x3D;&gt; {
   const match &#x3D; ({url}) &#x3D;&gt; url.hostname &#x3D;&#x3D;&#x3D; GOOGLE_ANALYTICS_HOST &amp;amp;&amp;amp;
@@ -139,9 +142,10 @@ const createCollectRoutes &#x3D; (queue) &#x3D;&gt; {
 /**
  * Creates a route with a network first strategy for the analytics.js script.
  *
- * @private
  * @param {string} cacheName
  * @return {Route} The created route.
+ *
+ * @private
  */
 const createAnalyticsJsRoute &#x3D; (cacheName) &#x3D;&gt; {
   const match &#x3D; ({url}) &#x3D;&gt; url.hostname &#x3D;&#x3D;&#x3D; GOOGLE_ANALYTICS_HOST &amp;amp;&amp;amp;
@@ -154,9 +158,10 @@ const createAnalyticsJsRoute &#x3D; (cacheName) &#x3D;&gt; {
 /**
  * Creates a route with a network first strategy for the gtag.js script.
  *
- * @private
  * @param {string} cacheName
  * @return {Route} The created route.
+ *
+ * @private
  */
 const createGtagJsRoute &#x3D; (cacheName) &#x3D;&gt; {
   const match &#x3D; ({url}) &#x3D;&gt; url.hostname &#x3D;&#x3D;&#x3D; GTM_HOST &amp;amp;&amp;amp;
@@ -179,7 +184,8 @@ const createGtagJsRoute &#x3D; (cacheName) &#x3D;&gt; {
  *     the hit parameters prior to replaying
  *     the hit. The function is invoked with the original hit&#x27;s URLSearchParams
  *     object as its only argument.
- * @memberof module:workbox-google-analytics
+ *
+ * @memberof workbox.googleAnalytics
  */
 const initialize &#x3D; (options &#x3D; {}) &#x3D;&gt; {
   const cacheName &#x3D; cacheNames.getGoogleAnalyticsName(options.cacheName);

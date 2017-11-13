@@ -16,9 +16,9 @@ toc:
 - title: "PrecacheController"
   path: /web/tools/workbox/v3/reference-docs/latest/workbox.precaching.PrecacheController
 - title: "Queue"
-  path: /web/tools/workbox/v3/reference-docs/latest/module-workbox-background-sync.Queue
+  path: /web/tools/workbox/v3/reference-docs/latest/workbox.backgroundSync.Queue
 - title: "QueuePlugin"
-  path: /web/tools/workbox/v3/reference-docs/latest/module-workbox-background-sync.QueuePlugin
+  path: /web/tools/workbox/v3/reference-docs/latest/workbox.backgroundSync.QueuePlugin
 - title: "RegExpRoute"
   path: /web/tools/workbox/v3/reference-docs/latest/workbox.routing.RegExpRoute
 - title: "Route"
@@ -27,18 +27,22 @@ toc:
   path: /web/tools/workbox/v3/reference-docs/latest/workbox.routing.Router
 - title: "StaleWhileRevalidate"
   path: /web/tools/workbox/v3/reference-docs/latest/workbox.strategies.StaleWhileRevalidate
+- title: "workbox"
+  path: /web/tools/workbox/v3/reference-docs/latest/workbox
+- title: "workbox.backgroundSync"
+  path: /web/tools/workbox/v3/reference-docs/latest/workbox.backgroundSync
 - title: "workbox.core"
   path: /web/tools/workbox/v3/reference-docs/latest/workbox.core
 - title: "workbox.expiration"
   path: /web/tools/workbox/v3/reference-docs/latest/workbox.expiration
+- title: "workbox.googleAnalytics"
+  path: /web/tools/workbox/v3/reference-docs/latest/workbox.googleAnalytics
 - title: "workbox.precaching"
   path: /web/tools/workbox/v3/reference-docs/latest/workbox.precaching
 - title: "workbox.routing"
   path: /web/tools/workbox/v3/reference-docs/latest/workbox.routing
 - title: "workbox.strategies"
   path: /web/tools/workbox/v3/reference-docs/latest/workbox.strategies
-- title: "WorkboxSW"
-  path: /web/tools/workbox/v3/reference-docs/latest/module-workbox-sw-WorkboxSW
 - title: "WorkboxWebpackPlugin"
   path: /web/tools/workbox/v3/reference-docs/latest/module-workbox-webpack-plugin-WorkboxWebpackPlugin
 - title: "Index of all"

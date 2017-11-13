@@ -2,8 +2,8 @@
 <html devsite>
 
 <head>
-  <meta name="project_path" value="/web/tools/_project.yaml" />
-  <meta name="book_path" value="/web/tools/_book.yaml" />
+  <meta name="project_path" value="/web/tools/workbox/v3/_project.yaml" />
+  <meta name="book_path" value="/web/tools/workbox/v3/_book.yaml" />
   <meta name="gtm_var" data-key="docType" data-value="reference">
   <title>Module: workbox-build</title>
   <link href="jsdoc.css" rel="stylesheet">
@@ -31,6 +31,41 @@
           <section>
             <h2>Methods</h2>
             <section>
+              <h3 id=".copyWorkboxLibraries" class="symbol-name">copyWorkboxLibraries</h3>
+              <div class="symbol-detail-labels"><span class="label label-static"><small>static</small></span></div>
+              <p class="type-signature"> copyWorkboxLibraries(destDirectory)&nbsp;returns&nbsp;Promise containing string</p>
+              <p>This copies over a set of runtime libraries used by Workbox into a local directory, which should be deployed alongside your service worker file.</p>
+              <p>As an alternative to deploying these local copies, you could instead use Workbox from its official CDN URL.</p>
+              <p>This method is exposed for the benefit of developers using
+                <a href="module-workbox-build.html#.injectManifest">injectManifest()</a> who would prefer not to use the CDN copies of Workbox. Developers using
+                <a href="module-workbox-build.html#.generateSW">generateSW()</a> don't need to explicitly call this method, as it's called automatically when
+                <code>importWorkboxFromCDN</code> is set to <code>false</code>.</p>
+              <section>
+                <table class="function param responsive">
+                  <tr>
+                    <th colspan="2">
+                      <h4>Parameter</h4>
+                    </th>
+                  </tr>
+                  <tbody>
+                    <tr>
+                      <td class="details-table-name">
+                        <p>destDirectory</p>
+                      </td>
+                      <td>
+                        <p class="details-table-types">string</p>
+                        <p>The path to the parent directory under which the new directory of libraries will be created.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>Promise containing string</code>&nbsp;The name of the newly created directory.</p>
+                </dd>
+              </dl>
               <h3 id=".generateSW" class="symbol-name">generateSW</h3>
               <div class="symbol-detail-labels"><span class="label label-async"><small>async</small></span>&nbsp;&nbsp;&nbsp;<span class="label label-static"><small>static</small></span></div>
               <p class="type-signature"> generateSW(input)&nbsp;returns&nbsp;Promise containing {count: Number, size: Number}</p>

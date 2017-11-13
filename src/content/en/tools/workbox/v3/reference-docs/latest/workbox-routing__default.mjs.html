@@ -2,8 +2,8 @@
 <html devsite>
 
 <head>
-  <meta name="project_path" value="/web/tools/_project.yaml" />
-  <meta name="book_path" value="/web/tools/_book.yaml" />
+  <meta name="project_path" value="/web/tools/workbox/v3/_project.yaml" />
+  <meta name="book_path" value="/web/tools/workbox/v3/_book.yaml" />
   <meta name="gtm_var" data-key="docType" data-value="reference">
   <title>Source: workbox-routing/_default.mjs</title>
   <link href="jsdoc.css" rel="stylesheet">
@@ -36,13 +36,14 @@
   limitations under the License.
 */
 
-import {assert} from &#x27;workbox-core/_private/assert.mjs&#x27;;
-import {WorkboxError} from &#x27;workbox-core/_private/WorkboxError.mjs&#x27;;
-import {cacheNames} from &#x27;workbox-core/_private/cacheNames.mjs&#x27;;
+import {NavigationRoute} from &#x27;./NavigationRoute.mjs&#x27;;
+import {RegExpRoute} from &#x27;./RegExpRoute.mjs&#x27;;
 import {Router} from &#x27;./Router.mjs&#x27;;
 import {Route} from &#x27;./Route.mjs&#x27;;
-import {RegExpRoute} from &#x27;./RegExpRoute.mjs&#x27;;
-import {NavigationRoute} from &#x27;./NavigationRoute.mjs&#x27;;
+import {WorkboxError} from &#x27;workbox-core/_private/WorkboxError.mjs&#x27;;
+import {assert} from &#x27;workbox-core/_private/assert.mjs&#x27;;
+import {cacheNames} from &#x27;workbox-core/_private/cacheNames.mjs&#x27;;
+import {logger} from &#x27;workbox-core/_private/logger.mjs&#x27;;
 import &#x27;./_version.mjs&#x27;;
 
 if (process.env.NODE_ENV !&#x3D;&#x3D; &#x27;production&#x27;) {
@@ -54,7 +55,7 @@ if (process.env.NODE_ENV !&#x3D;&#x3D; &#x27;production&#x27;) {
  */
 class DefaultRouter extends Router {
   /**
-   * Easily register a Regular Expression or function with a caching
+   * Easily register a RegExp, string, or function with a caching
    * strategy to the Router.
    *
    * This method will generate a Route for you if needed and
@@ -63,6 +64,7 @@ class DefaultRouter extends Router {
    *
    * @param {
    * RegExp|
+   * string|
    * workbox.routing.Route~matchCallback|
    * workbox.routing.Route
    * } capture
@@ -78,20 +80,53 @@ class DefaultRouter extends Router {
    */
   registerRoute(capture, handler, method &#x3D; &#x27;GET&#x27;) {
     let route;
-    // TODO Should we allow Express Route?
-    // TODO If so - don&#x27;t forget to add &#x27;string&#x27; to params in jsdoc.
-    /** if (typeof capture &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
-      if (capture.length &#x3D;&#x3D;&#x3D; 0) {
-        throw new WorkboxError(&#x27;empty-express-string&#x27;, {
-          moduleName: &#x27;workbox-routing&#x27;,
-          class: &#x27;DefaultRouter&#x27;,
-          func: &#x27;registerRoute&#x27;,
-          paramName: &#x27;capture&#x27;,
-        });
+
+    if (typeof capture &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+      const captureUrl &#x3D; new URL(capture, location);
+
+      if (process.env.NODE_ENV !&#x3D;&#x3D; &#x27;production&#x27;) {
+        if (!(capture.startsWith(&#x27;/&#x27;) || capture.startsWith(&#x27;http&#x27;))) {
+          throw new WorkboxError(&#x27;invalid-string&#x27;, {
+            moduleName: &#x27;workbox-routing&#x27;,
+            className: &#x27;DefaultRouter&#x27;,
+            funcName: &#x27;registerRoute&#x27;,
+            paramName: &#x27;capture&#x27;,
+          });
+        }
+
+        // We want to check if Express-style wildcards are in the pathname only.
+        // TODO: Remove this log message in v4.
+        const valueToCheck &#x3D; capture.startsWith(&#x27;http&#x27;) ?
+          captureUrl.pathname :
+          capture;
+        // See https://github.com/pillarjs/path-to-regexp#parameters
+        const wildcards &#x3D; &#x27;[*:?+]&#x27;;
+        if (valueToCheck.match(new RegExp(&#x60;${wildcards}&#x60;))) {
+          logger.debug(
+            &#x60;The &#x27;$capture&#x27; parameter contains an Express-style wildcard &#x60; +
+            &#x60;character (${wildcards}). Strings are now always interpreted as &#x60; +
+            &#x60;exact matches; use a RegExp for partial or wildcard matches.&#x60;
+          );
+        }
       }
-      route &#x3D; new ExpressRoute(capture, handler, method);
-    } **/
-    if (capture instanceof RegExp) {
+
+      const matchCallback &#x3D; ({url}) &#x3D;&gt; {
+        if (process.env.NODE_ENV !&#x3D;&#x3D; &#x27;production&#x27;) {
+          if ((url.pathname &#x3D;&#x3D;&#x3D; captureUrl.pathname) &amp;amp;&amp;amp;
+              (url.origin !&#x3D;&#x3D; captureUrl.origin)) {
+            logger.debug(
+              &#x60;${capture} only partially matches the cross-origin URL &#x60; +
+              &#x60;${url}. This route will only handle cross-origin requests &#x60; +
+              &#x60;if they match the entire URL.&#x60;
+            );
+          }
+        }
+
+        return url.href &#x3D;&#x3D;&#x3D; captureUrl.href;
+      };
+
+      route &#x3D; new Route(matchCallback, handler, method);
+    } else if (capture instanceof RegExp) {
       route &#x3D; new RegExpRoute(capture, handler, method);
     } else if (typeof capture &#x3D;&#x3D;&#x3D; &#x27;function&#x27;) {
       route &#x3D; new Route(capture, handler, method);

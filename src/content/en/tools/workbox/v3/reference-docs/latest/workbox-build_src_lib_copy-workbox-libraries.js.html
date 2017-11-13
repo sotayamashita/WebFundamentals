@@ -2,8 +2,8 @@
 <html devsite>
 
 <head>
-  <meta name="project_path" value="/web/tools/_project.yaml" />
-  <meta name="book_path" value="/web/tools/_book.yaml" />
+  <meta name="project_path" value="/web/tools/workbox/v3/_project.yaml" />
+  <meta name="book_path" value="/web/tools/workbox/v3/_book.yaml" />
   <meta name="gtm_var" data-key="docType" data-value="reference">
   <title>Source: workbox-build/src/lib/copy-workbox-libraries.js</title>
   <link href="jsdoc.css" rel="stylesheet">
@@ -66,6 +66,8 @@ const BUILD_TYPES &#x3D; [
  * @param {string} destDirectory The path to the parent directory under which
  * the new directory of libraries will be created.
  * @return {Promise&amp;lt;string&gt;} The name of the newly created directory.
+ *
+ * @alias module:workbox-build.copyWorkboxLibraries
  */
 module.exports &#x3D; async (destDirectory) &#x3D;&gt; {
   const thisPkg &#x3D; require(&#x27;../../package.json&#x27;);

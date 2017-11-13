@@ -2,8 +2,8 @@
 <html devsite>
 
 <head>
-  <meta name="project_path" value="/web/tools/_project.yaml" />
-  <meta name="book_path" value="/web/tools/_book.yaml" />
+  <meta name="project_path" value="/web/tools/workbox/v3/_project.yaml" />
+  <meta name="book_path" value="/web/tools/workbox/v3/_book.yaml" />
   <meta name="gtm_var" data-key="docType" data-value="reference">
   <title>Namespace: routing</title>
   <link href="jsdoc.css" rel="stylesheet">
@@ -15,7 +15,7 @@
       <div id="jsdoc-content-container">
         <div id="jsdoc-main" role="main">
           <header class="page-header">
-            <h1><small>workbox.<wbr></small><span class="symbol-name">routing</span></h1>
+            <h1><small><a href="workbox.html">workbox</a>.<wbr></small><span class="symbol-name">routing</span></h1>
             <div class="symbol-detail-labels"><span class="label label-kind"><small>namespace</small></span>&nbsp;&nbsp;&nbsp;<span class="label label-static"><small>static</small></span></div>
           </header>
           <section>
@@ -134,7 +134,7 @@
               <h3 id=".registerRoute" class="symbol-name">registerRoute</h3>
               <div class="symbol-detail-labels"><span class="label label-static"><small>static</small></span></div>
               <p class="type-signature"> registerRoute(capture, handler, method)&nbsp;returns&nbsp;<a href="workbox.routing.Route.html">workbox.routing.Route</a></p>
-              <p>Easily register a Regular Expression or function with a caching strategy to the Router.</p>
+              <p>Easily register a RegExp, string, or function with a caching strategy to the Router.</p>
               <p>This method will generate a Route for you if needed and call <a href="workbox.routing.Router.html#registerRoute">Router.registerRoute()</a>.</p>
               <section>
                 <table class="function param responsive">
@@ -149,7 +149,7 @@
                         <p>capture</p>
                       </td>
                       <td>
-                        <p class="details-table-types">(RegExp, <a href="workbox.routing.Route.html#~matchCallback">workbox.routing.Route~matchCallback</a>, or <a href="workbox.routing.Route.html">workbox.routing.Route</a>)</p>
+                        <p class="details-table-types">(RegExp, string, <a href="workbox.routing.Route.html#~matchCallback">workbox.routing.Route~matchCallback</a>, or <a href="workbox.routing.Route.html">workbox.routing.Route</a>)</p>
                         <p>If the capture param is a <code>Route</code>, all other arguments will be ignored.</p>
                       </td>
                     </tr>

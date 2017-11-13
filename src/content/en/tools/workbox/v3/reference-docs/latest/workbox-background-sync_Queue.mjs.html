@@ -2,8 +2,8 @@
 <html devsite>
 
 <head>
-  <meta name="project_path" value="/web/tools/_project.yaml" />
-  <meta name="book_path" value="/web/tools/_book.yaml" />
+  <meta name="project_path" value="/web/tools/workbox/v3/_project.yaml" />
+  <meta name="book_path" value="/web/tools/workbox/v3/_book.yaml" />
   <meta name="gtm_var" data-key="docType" data-value="reference">
   <title>Source: workbox-background-sync/Queue.mjs</title>
   <link href="jsdoc.css" rel="stylesheet">
@@ -49,7 +49,7 @@ const queueNames &#x3D; new Set();
  * later. All parts of the storing and replaying process are observable via
  * callbacks.
  *
- * @memberof module:workbox-background-sync
+ * @memberof workbox.backgroundSync
  */
 class Queue {
   /**
@@ -218,8 +218,9 @@ class Queue {
    * Returns the set of queue names. This is primarily used to reset the list
    * of queue names in tests.
    *
-   * @private
    * @return {Set}
+   *
+   * @private
    */
   static get _queueNames() {
     return queueNames;
