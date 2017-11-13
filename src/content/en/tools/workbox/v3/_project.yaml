@@ -1,0 +1,12 @@
+parent_project_metadata_path: /web/tools/_project.yaml
+name: Workbox
+description: Workbox is a set of service worker libraries that making build progressive web apps easy.
+home_url: /web/tools/workbox/
+buganizer_id: 180451
+color: orange
+content_license: cc3-apache2
+footer_path: /web/tools/workbox/v3/_footer.yaml
+google_analytics_ids:
+  - UA-52746336-1
+icon:
+  path: /web/tools/workbox/v3/images/workbox-icon192x192.png
