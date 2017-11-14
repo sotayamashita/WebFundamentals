@@ -49,6 +49,21 @@ description: Service Worker Libraries.
   display: none;
 }
 
+.workbox-contributors-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.wb-contrib__image {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  box-shadow: 0 4px 6px #616161;
+  margin: 10px;
+}
+
 @media (min-width: 780px) {
   .index__install-options {
     flex-direction: row;
@@ -81,6 +96,8 @@ fully-offline, you can use Workbox to store and serve common files locally,
 rather than from the network.
 
 <p><a class="button" href="overview">Learn more</a></p>
+
+<div style="clear:both;"></div>
 
 ## Get Started
 ### Choose your build tool to get started:
@@ -173,13 +190,23 @@ cross-browser compatible.
 
 ## Workbox: Flexible PWA Libraries @ Chrome Dev Summit 2017
 
-In this talk, Jeff Posnick gives an overview of Workbox's support for caching
+<div class="attempt-left">
+<p>In this talk, Jeff Posnick gives an overview of Workbox's support for caching
 strategies, precaching, and handling navigation requests. It's filled throughout
 with real-world examples of how companies like Pinterest and WIRED are using
-Workbox in production.
+Workbox in production.</p>
+</div>
 
-<div class="video-wrapper">
+<div class="attempt-right" style="width: 100%;">
   <iframe class="devsite-embedded-youtube-video" data-video-id="DtuJ55tmjps"
           data-autohide="1" data-showinfo="0" frameborder="0" allowfullscreen>
   </iframe>
+</div>
+
+<div style="clear:both;"></div>
+
+## Contributors
+
+<div class="workbox-contributors-container">
+  {% include "web/tools/workbox/templates/contributors.html" %}
 </div>
