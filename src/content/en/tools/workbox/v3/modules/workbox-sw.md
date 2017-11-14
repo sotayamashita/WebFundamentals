@@ -5,4 +5,6 @@ description: The module guide for workbox-sw.
 {# wf_updated_on: 2017-11-06 #}
 {# wf_published_on: 2017-11-06 #}
 
-# Workbox SW {: .page-title }
+# Workbox {: .page-title }
+
+[Demo](https://workbox-demos.firebaseapp.com/demo/workbox-sw/) | [Reference Docs](http://localhost:8080/web/tools/workbox/v3/reference-docs/latest/workbox)

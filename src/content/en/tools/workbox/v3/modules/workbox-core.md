@@ -7,6 +7,8 @@ description: The module guide for workbox-core.
 
 # Workbox Core {: .page-title }
 
+[Demo](https://workbox-demos.firebaseapp.com/demo/workbox-core/) | [Reference Docs](http://localhost:8080/web/tools/workbox/v3/reference-docs/latest/workbox.core)
+
 ## What is Workbox Core?
 
 Workbox has been built to be modular, allowing developers to select the pieces they want to use without forcing them to download everything in a single file.

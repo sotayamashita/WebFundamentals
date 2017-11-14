@@ -7,6 +7,8 @@ description: The module guide for workbox-cache-expiration.
 
 # Workbox Cache Expiration {: .page-title }
 
+[Demo](https://workbox-demos.firebaseapp.com/demo/workbox-cache-expiration/) | [Reference Docs](http://localhost:8080/web/tools/workbox/v3/reference-docs/latest/workbox.expiration)
+
 ## What is Cache Expiration?
 
 It’s fairly common to want to put restrictions on a cache in terms of how long if should allow items to be stored in a cache or how many items should be kept in a cache. Workbox provides this functionality through the `workbox-cache-expiration` plugin that allows you to limit the number of entries in a cache and / or remove entries that have been cached for a long period of time.

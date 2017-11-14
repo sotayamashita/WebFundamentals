@@ -7,6 +7,8 @@ description: The module guide for workbox-routing.
 
 # Workbox Routing {: .page-title }
 
+[Demo](https://workbox-demos.firebaseapp.com/demo/workbox-routing/) | [Reference Docs](http://localhost:8080/web/tools/workbox/v3/reference-docs/latest/workbox.routing)
+
 ## What is Workbox Routing?
 
 A service worker can intercept network requests for a page. It may respond to the browser with cached content,content from the network or content generated in the service worker.
